@@ -1,3 +1,5 @@
+package Algorithms;
+
 public class InsertionSort {
 
     public int[] insertionSort(int[] nums) {
