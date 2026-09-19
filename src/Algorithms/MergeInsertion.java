@@ -2,34 +2,26 @@ package Algorithms;
 
 public class MergeInsertion {
     public static void algorithm(int[] nums) {
-        if (nums.length <= 1) {
-            return;
-        }
-
-        if (nums.length <= 15) {
-            insertionSort(nums);
-            return;
-        }
-
-        int middle = nums.length / 2;
-        int[] leftNums = new int[middle];
-        int[] rightNums = new int[nums.length - middle];
-
-        for (int i = 0; i < middle; i++) {
-            leftNums[i] = nums[i];
-        }
-        for (int i = middle; i < nums.length; i++) {
-            rightNums[i - middle] = nums[i];
-        }
-
-        algorithm(leftNums);
-        algorithm(rightNums);
-        merge(leftNums, rightNums, nums);
+        int[] buffer = new int[nums.length];
+        sort(nums, buffer, 0, nums.length);
     }
 
-    private static void insertionSort(int[] nums) {
-        for (int i = 1; i < nums.length; i++) {
-            for (int j = i; j > 0; j--) {
+    private static void sort(int[] nums, int[] buffer, int start, int end) {
+        if (end - start <= 15) {
+            insertionSort(nums, start, end);
+            return;
+        }
+
+        int middle = start + (end - start) / 2;
+
+        sort(nums, buffer, start, middle); //left array
+        sort(nums, buffer, middle, end); //right array
+        merge(nums, buffer, start, middle, end);
+    }
+
+    private static void insertionSort(int[] nums, int start, int end) {
+        for (int i = start + 1; i < end; i++) {
+            for (int j = i; j > start; j--) {
                 if (nums[j] < nums[j - 1]) {
                     int temp = nums[j];
                     nums[j] = nums[j - 1];
@@ -41,23 +33,29 @@ public class MergeInsertion {
         }
     }
 
-    public static void merge(int[] leftNums, int[] rightNums, int[] nums) {
-        int i = 0, l = 0, r = 0;
+    private static void merge(int[] nums, int[] buffer, int start, int middle, int end) {
+        int left = start;
+        int right = middle;
+        int next = start;
 
-        while (l < leftNums.length && r < rightNums.length) {
-            if (leftNums[l] < rightNums[r]) {
-                nums[i++] = leftNums[l++];
+        while (left < middle && right < end) {
+            if (nums[left] <= nums[right]) {
+                buffer[next++] = nums[left++];
             } else {
-                nums[i++] = rightNums[r++];
+                buffer[next++] = nums[right++];
             }
         }
 
-        while (l < leftNums.length) {
-            nums[i++] = leftNums[l++];
+        while (left < middle) {
+            buffer[next++] = nums[left++];
         }
 
-        while (r < rightNums.length) {
-            nums[i++] = rightNums[r++];
+        while (right < end) {
+            buffer[next++] = nums[right++];
+        }
+
+        for (int i = start; i < end; i++) {
+            nums[i] = buffer[i];
         }
     }
 }
