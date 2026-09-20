@@ -24,18 +24,20 @@ public class Metrics {
     }
 
     public void incrementComparisons() {
-        // TODO: посчитать сравнение элементов
+        comparisons++;
     }
 
     public void updateMaxDepth(int depth) {
-        // TODO: обновить максимальную глубину
+        maxDepth = Math.max(maxDepth, depth);
     }
 
     public void setTimeNanos(long timeNanos) {
-        // TODO: сохранить время выполнения
+        this.timeNanos = timeNanos;
     }
 
     public void reset() {
-        // TODO: сбросить метрики перед новым запуском
+        comparisons = 0;
+        maxDepth = 0;
+        timeNanos = 0;
     }
 }
