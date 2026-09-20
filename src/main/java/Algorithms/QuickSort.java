@@ -1,36 +1,33 @@
 package Algorithms;
 
+import Algorithms.metrics.Metrics;
+
 public class QuickSort {
     public static void algorithm(int[] nums) {
-        quicksort(nums, 0, nums.length-1);
+        algorithm(nums, new Metrics());
     }
 
-    public static void quicksort(int[] nums, int start, int end) {
-        if (end<=start) {
-            return; //base case
-        }
-        int pivot = partition(nums, start, end);
-        quicksort(nums, start, pivot - 1); //sort numbers smaller than the pivot
-        quicksort(nums, pivot + 1, end); //sort numbers greater than the pivot
+    public static void algorithm(int[] nums, Metrics metrics) {
+        quicksort(nums, 0, nums.length - 1, metrics, 1);
     }
 
-    public static int partition(int[] nums, int start, int end) {
-        int pivot = nums[end];
-        int i = start - 1;
+    private static void quicksort(int[] nums, int start, int end, Metrics metrics, int depth) {
+        while (start < end) {
+            metrics.updateMaxDepth(depth);
+            int[] equalRange = ThreeWayPartition.partition(nums, start, end, metrics);
 
-        for (int j = start; j<= end-1; j++){
-            if (nums[j] < pivot) {
-                i++;
-                int temp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = temp;
+            int leftEnd = equalRange[0] - 1;
+            int rightStart = equalRange[1] + 1;
+            int leftSize = leftEnd - start + 1;
+            int rightSize = end - rightStart + 1;
+
+            if (leftSize < rightSize) {
+                quicksort(nums, start, leftEnd, metrics, depth + 1);
+                start = rightStart;
+            } else {
+                quicksort(nums, rightStart, end, metrics, depth + 1);
+                end = leftEnd;
             }
         }
-        i++;
-        int temp = nums[i];
-        nums[i] = nums[end];
-        nums[end] = temp;
-
-        return i;
     }
 }
