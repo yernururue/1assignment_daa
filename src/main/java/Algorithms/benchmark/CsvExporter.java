@@ -1,5 +1,12 @@
 package Algorithms.benchmark;
 
-// TODO: Export benchmark results to CSV.
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
 public class CsvExporter {
+    public void export(List<BenchmarkResult> results, Path outputPath) throws IOException {
+        // TODO: записать заголовок csv
+        // TODO: записать результаты benchmark
+    }
 }
