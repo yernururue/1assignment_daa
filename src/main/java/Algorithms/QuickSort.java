@@ -8,12 +8,15 @@ public class QuickSort {
     }
 
     public static void algorithm(int[] nums, Metrics metrics) {
+        metrics.reset();
+        long startTime = System.nanoTime();
         quicksort(nums, 0, nums.length - 1, metrics, 1);
+        metrics.setTimeNanos(System.nanoTime() - startTime);
     }
 
     private static void quicksort(int[] nums, int start, int end, Metrics metrics, int depth) {
+        metrics.updateMaxDepth(depth);
         while (start < end) {
-            metrics.updateMaxDepth(depth);
             int[] equalRange = ThreeWayPartition.partition(nums, start, end, metrics);
 
             int leftEnd = equalRange[0] - 1;
