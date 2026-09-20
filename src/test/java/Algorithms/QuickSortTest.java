@@ -38,6 +38,14 @@ public class QuickSortTest {
     }
 
     @Test
+    void sortsEdgeCases() {
+        assertSorted(new int[0]);
+        assertSorted(new int[]{7});
+        assertSorted(new int[]{4, 4, 4, 4});
+        assertSorted(new int[]{1, 2, 3, 4, 5});
+    }
+
+    @Test
     void keepsRecursionDepthBounded() {
         int size = 100_000;
         int[] values = new int[size];
@@ -51,5 +59,12 @@ public class QuickSortTest {
                 () -> "depth " + metrics.getMaxDepth() + " exceeds " + depthLimit);
         assertTrue(metrics.getComparisons() > 0);
         assertTrue(metrics.getTimeNanos() > 0);
+    }
+
+    private void assertSorted(int[] values) {
+        int[] expected = values.clone();
+        Arrays.sort(expected);
+        QuickSort.algorithm(values);
+        assertArrayEquals(expected, values);
     }
 }
