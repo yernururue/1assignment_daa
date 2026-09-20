@@ -1,6 +1,10 @@
 ### Maven ###
 target/
 
+### Python ###
+.venv/
+__pycache__/
+
 ### Java ###
 *.class
 
