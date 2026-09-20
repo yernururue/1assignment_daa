@@ -14,17 +14,33 @@ public class InputGenerator {
     }
 
     public int[] generateRandom(int size) {
-        // TODO: создать массив случайных чисел
-        return new int[size];
+        int[] values = new int[requireValidSize(size)];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = random.nextInt();
+        }
+        return values;
     }
 
     public int[] generateSorted(int size) {
-        // TODO: создать отсортированный массив
-        return new int[size];
+        int[] values = new int[requireValidSize(size)];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = i;
+        }
+        return values;
     }
 
     public int[] generateDuplicates(int size) {
-        // TODO: создать массив со значениями от 0 до 9
-        return new int[size];
+        int[] values = new int[requireValidSize(size)];
+        for (int i = 0; i < values.length; i++) {
+            values[i] = random.nextInt(10);
+        }
+        return values;
+    }
+
+    private int requireValidSize(int size) {
+        if (size < 0) {
+            throw new IllegalArgumentException("size must not be negative");
+        }
+        return size;
     }
 }
