@@ -15,21 +15,28 @@ public class QuickSelect {
             throw new IllegalArgumentException("k must be between 0 and nums.length - 1");
         }
 
+        metrics.reset();
+        metrics.updateMaxDepth(1);
+        long startTime = System.nanoTime();
         int start = 0;
         int end = nums.length - 1;
 
-        while (start <= end) {
-            int[] equalRange = ThreeWayPartition.partition(nums, start, end, metrics);
+        try {
+            while (start <= end) {
+                int[] equalRange = ThreeWayPartition.partition(nums, start, end, metrics);
 
-            if (k < equalRange[0]) {
-                end = equalRange[0] - 1;
-            } else if (k > equalRange[1]) {
-                start = equalRange[1] + 1;
-            } else {
-                return nums[k];
+                if (k < equalRange[0]) {
+                    end = equalRange[0] - 1;
+                } else if (k > equalRange[1]) {
+                    start = equalRange[1] + 1;
+                } else {
+                    return nums[k];
+                }
             }
-        }
 
-        throw new IllegalStateException("Selection failed");
+            throw new IllegalStateException("Selection failed");
+        } finally {
+            metrics.setTimeNanos(System.nanoTime() - startTime);
+        }
     }
 }
