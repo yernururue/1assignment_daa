@@ -3,10 +3,12 @@ package Algorithms.benchmark;
 import java.util.Random;
 
 public class InputGenerator {
+    private static final long DEFAULT_SEED = 42L;
+
     private final Random random;
 
     public InputGenerator() {
-        random = new Random();
+        this(DEFAULT_SEED);
     }
 
     public InputGenerator(long seed) {
