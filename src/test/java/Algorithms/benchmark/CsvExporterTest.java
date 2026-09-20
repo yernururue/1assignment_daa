@@ -1,5 +1,7 @@
 package Algorithms.benchmark;
 
-// TODO: Add tests for CsvExporter.
 public class CsvExporterTest {
+    void writesHeaderAndResults() {
+        // TODO: проверить заголовок и одну строку результата
+    }
 }
